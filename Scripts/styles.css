@@ -1,0 +1,36 @@
+html, body {
+    background-color: #003e6b;
+    overflow: hidden;
+}
+#loading-cover {
+    margin: auto;
+    padding-top: 25%;
+    width: 50%;
+    height: 100vh;
+    text-align: center; 
+    color: black;
+    
+}
+#logo{
+    height: fit-content;
+}
+#unity-loading-bar{
+    position: relative;
+    padding-top: 1em;
+}
+#unity-progress-bar-empty {
+    position: absolute;
+    top:100%;
+    left: 0;
+    height: 20px;
+    width: 100%;
+    outline: 1px solid #eee;
+}
+
+#unity-progress-bar-full {
+    height: 20px;
+    top:100%;
+    left: 0;
+    background-color: #eee;
+    position: absolute;
+}
