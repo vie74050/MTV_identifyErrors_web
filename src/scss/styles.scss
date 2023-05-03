@@ -1,0 +1,134 @@
+html, body {
+    background-color: #003e6b;
+    overflow: hidden;
+    min-width: 800px;
+    min-height: 550px;
+}
+#loading-cover {
+    margin: auto;
+    padding-top: 25vh;
+    width: 50%;
+    height: 100vh;
+    text-align: center; 
+    color: black;
+    
+}
+#logo{
+    height: 153px;
+    width: 171px;
+    margin: auto;
+    background-image: url(../images/bcit_cmyk.png);
+}
+#unity-loading-bar{
+    position: relative;
+    padding-top: 1em;
+}
+#unity-progress-bar-empty {
+    position: absolute;
+    top:100%;
+    left: 0;
+    height: 20px;
+    width: 100%;
+    outline: 1px solid #eee;
+}
+
+#unity-progress-bar-full {
+    height: 20px;
+    top:100%;
+    left: 0;
+    background-color: #eee;
+    position: absolute;
+}
+
+#dialog-quiz-btn{
+    position: absolute;
+    z-index: 9999;
+    top: 10px;
+    right: 18px;
+
+    &::after{
+        content: "+";
+        border: 1px solid #ccc;
+        border-radius: 25%;
+        margin: 0 0 0 5px;
+        text-align: center;
+        padding: 0 5px;
+    }
+    &.btn-open::after{
+        content: "\2013";
+    }
+}
+
+#dialog-quiz {
+    height: calc(100% - 40px);
+    width: fit-content;
+    max-height: 80vh;
+
+    #list-items-container{
+        p {
+            display: flex;
+            flex-direction: row;
+            margin: 0.5em 0;
+            vertical-align: middle;
+            align-items: center;
+        }
+        label {
+            font-weight: normal;
+            margin: 0 0.5em;
+        }
+        input[type="checkbox"]{    
+            -webkit-appearance: initial;
+            appearance: initial;
+            background: #bbb;
+            width: 20px;
+            height: 20px;
+            border: none;
+            position: relative;
+            margin: 0;
+        }
+        input[type="checkbox"]:checked {
+            background: yellow;
+        }
+        input[type="checkbox"]:checked:after {
+            /* Heres your symbol replacement */
+            content: "\2716";
+            color: red;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+        }
+        input[type="checkbox"]:focus,
+        input[type="checkbox"]:active{
+            outline-offset: 2px;
+        }
+        button.fb-btn {
+            width: 13px;
+            height: fit-content;
+            font-size: 13px;
+            padding: 2px;
+            line-height: 13px;
+            box-sizing: content-box;
+            background: #ff0000;
+            color: white;
+            border-radius: 50%;
+            font-weight: 800;
+            border-color: red;
+        }
+    }
+    
+}
+
+.ui-tooltip {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 800px)  {
+    .instructions { font-size: 10px;}
+}
+@media only screen and (max-width: 600px)  {
+    .instructions { font-size: 0px;}
+}

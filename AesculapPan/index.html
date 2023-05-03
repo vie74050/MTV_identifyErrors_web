@@ -6,18 +6,17 @@
     <title>BCIT | 3D Activity Viewer</title>
     <link
       rel="shortcut icon"
-      href="https://learn.bcit.ca/shared/scripts/interactive/UnityModelViewerTemplateData/favicon.ico"
+      href="https://learn.bcit.ca/shared/scripts/interactive/UnityModelViewerTemplateData/bcit_cmyk.ico"
     />
-    <!-- jquery & jquery ui min -->
-    <link rel="stylesheet" href="../Libs/jquery-bootstrap-UMV.min.css" />
-    <script src="../Libs/jquery.min.js"></script>
-
+    
+    <link rel="stylesheet" href="../src/Libs/jquery-bootstrap-UMV.min.css" />
+    <link rel="stylesheet" href="../dist/bundle.css" />
+    
     <!-- Unity Handlers-->
-    <link rel="stylesheet" href="../Scripts/styles.css" />
-    <script
-      src="https://learn.bcit.ca/shared/scripts/interactive/UnityModelViewerTemplateData/FromToUnityHandlers.js"
-      type="text/javascript"
-    ></script>
+    <script 
+      src="../dist/bundle.js"
+      type="text/javascript"></script> 
+       
   </head>
 
   <body>
@@ -46,7 +45,7 @@
     </div>
 
     <div id="loading-cover">
-      <div id="logo"><img src="logo.png"></div>  
+      <div id="logo"></div>  
 
       <div id="unity-loading-bar">        
         <div id="unity-progress-bar-empty" ></div>
@@ -55,64 +54,12 @@
         <div class="spinner"></div>
       </div>
     </div>
+    <canvas id="unity-canvas" width="100%" height="600"></canvas>
 
-    <!-- Unity editor v22.1.7 webpage loading -->
-    <script>
-      const canvas = document.createElement("CANVAS");
-      canvas.id = "unity-canvas";
-      canvas.width = 1224;
-      canvas.height = 600;
-      document.body.appendChild(canvas);
-
-      const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/AesculapPan.loader.js";
-      const config = {
-        dataUrl: buildUrl + "/AesculapPan.data.gz",
-        frameworkUrl: buildUrl + "/AesculapPan.framework.js.gz",
-        codeUrl: buildUrl + "/AesculapPan.wasm.gz",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "BCIT SOH",
-        productName: "MTV_identfyErrors",
-        productVersion: "0.1",
-      };
-      
-      const loadingCover = document.querySelector("#loading-cover");
-      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-      const progressBarFull = document.querySelector("#unity-progress-bar-full");
-      const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      const spinner = document.querySelector('.spinner');
-
-      const script = document.createElement("script");
-      script.src = loaderUrl;
-
-      script.onload = () => {
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-          // Mobile device style: fill the whole browser client area with the game canvas:
-          var meta = document.createElement("meta");
-          meta.name = "viewport";
-          meta.content =
-            "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
-          document.getElementsByTagName("head")[0].appendChild(meta);
-        }
-
-        createUnityInstance(canvas, config, (progress) => {
-          spinner.style.display = "none";
-          progressBarEmpty.style.display = "";
-          progressBarFull.style.width = `${100 * progress}%`;
-        }).then((unityInstance) => {
-          loadingCover.style.display = "none";
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
-      
-      // expect / deliminted string of game object names
-      var arList;
-      function FromUnity_SetListItems(str) {
-        arList = str.split("\\");
-      }
-    </script>
+    <div id="dialog-quiz" title="Select all problematic items">
+      <div id="list-items-container"></div>
+    </div>
+    <button id="dialog-quiz-btn">Checklist</button>
 
     <!-- content table that can be filled out in D2L web editor: Part name must match target part name in model -->
     <table>
@@ -125,9 +72,33 @@
 
       <tbody>
         <tr>
-          <td>GO name</td>
+          <td>Blue Filter Paper - ERROR</td>
           <td>
-            <p>dialog message</p>
+            <p>The filter is missing</p>
+          </td>
+        </tr>
+        <tr>
+          <td>External Sterile Indicator - ERROR</td>
+          <td>
+            <p>Sterile indicator is pink.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Plastic Lock - ERROR</td>
+          <td>
+            <p>Left plastic lock missing.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Indicator - ERROR</td>
+          <td>
+            <p>Indicator shows unsterile</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Curved Mayo Scissors - ERROR</td>
+          <td>
+            <p>Dried blood on Mayo scissors.</p>
           </td>
         </tr>
       </tbody>
