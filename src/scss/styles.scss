@@ -4,8 +4,6 @@
 html, body {
     background-color: #003e6b;
     overflow: hidden;
-    min-width: 400px;
-    min-height: 550px;
     width: 100%;
 	height: 100%;
 	font-family: Helvetica, Verdana, Arial, sans-serif;
@@ -77,10 +75,9 @@ canvas {
 }
 
 #dialog-quiz {
-    height: calc(100% - 40px);
+    
     width: fit-content;
-    max-height: 80vh;
-
+    
     #list-items-container{
         p {
             display: flex;
