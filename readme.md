@@ -20,13 +20,14 @@ Using npm and webpack. Use `npm install` to get started.
 
 #### Host options ####
 
-##### BCIT #####
+##### BCIT (Private) #####
 
-Upload to LMS shared files `scripts/interactive/UnityModelTaskViewer_IdentifyErrors`.
+Manually upload to LMS shared files `scripts/interactive/UnityModelTaskViewer_IdentifyErrors`.
 
-##### GITHUB as CDN #####
+##### Github (Public) #####
 
-Default, host `uploads` folder as CDN using [gaac](https://gaac.vercel.app/), a GitHub Integration activated for this repo
+Create gh-pages branch.  Src paths: `http(s)://<username>.github.io/<repository> `.
+> e.g. `https://vie74050.github.io/MTV_identifyErrors_web/bundle.js`
 
 ### Unity model handlers ###
 
