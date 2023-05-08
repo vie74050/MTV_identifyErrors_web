@@ -10,11 +10,23 @@ Version of Unity Task Viewer web handler for builds published by **MTV_identifyE
 Using npm and webpack. Use `npm install` to get started.
 
 - For dev, use `npm run start` for watch mode.
-- For prod, use `npm run build`.  
+- For prod, build `npm run build`.  
 
 ### Pipeline ###
 
-Builds to `dist` folder using webpack.  Upload `dist` folder contents to host.  
+1. Build to `uploads` folder using webpack.  
+2. Upload `uploads` folder contents to host / cdn.
+3. (if changed) Update the script src `.../bundle.css` and `.../bundle.js` in the Unity project's `Assets\WebGLTemplates\webD2LTable\index.html` to point to host location.
+
+#### Host options ####
+
+##### BCIT #####
+
+Upload to LMS shared files `scripts/interactive/UnityModelTaskViewer_IdentifyErrors`.
+
+##### GITHUB as CDN #####
+
+Default, host `uploads` folder as CDN using [gaac](https://gaac.vercel.app/), a GitHub Integration activated for this repo
 
 ### Unity model handlers ###
 
@@ -51,7 +63,7 @@ The build folder for the Unity model should have the structure:
 
 Where the `[project name]` should be descriptive of the scene.
 
-**NB**: 
+**NB**:
 
 - You only need to create the main project folder `[project name]` and build to that folder from Unity.  It will create the `Build` folder automatically and it's build artefacts will be named according to `[project name]`
 - Server hosting the model files need to be set up to serve gz compression.  See `.htaccess` file (add this to host folder).
