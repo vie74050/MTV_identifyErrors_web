@@ -26,23 +26,21 @@ Using npm and webpack. Use `npm install` to get started.
 - For prod, build `npm run build`.  
 - Deploy to github pages (optional): `npm run deploy`
 
-### Pipeline ###
-
-1. Build to `uploads` folder using webpack.  
-2. Upload `uploads` folder contents to host / cdn.
-3. (if changed) Update the script src `.../bundle.css` and `.../bundle.js` in the **Unity project**'s `Assets\WebGLTemplates\webD2LTable\index.html` to point to host location.
-
 #### Host options ####
-
-##### LMS (Private) #####
-
-BCIT: Manually upload to LMS shared files `scripts/interactive/UnityModelTaskViewer_IdentifyErrors`.
 
 ##### Github (Public) #####
 
 Requires repo to be public with Pages enabled. The src path to `uploads` will be `http(s)://<username>.github.io/<repository>`.
 
 > e.g. `https://vie74050.github.io/MTV_identifyErrors_web/bundle.js`
+
+##### LMS (Private) #####
+
+BCIT: Manually upload to LMS shared files `scripts/interactive/UnityModelTaskViewer_IdentifyErrors`.
+
+1. Build to `uploads` folder using webpack.  
+2. Upload `uploads` folder contents to host / cdn.
+3. (if src changed) Update the script src `.../bundle.css` and `.../bundle.js` in the **Unity project**'s `Assets\WebGLTemplates\webD2LTable\index.html` template to point to host location.
 
 ### Unity model handlers ###
 
