@@ -4,13 +4,15 @@
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></a>
 
 ## App description ##
-Variant of BCIT Unity Task Viewer web handler for builds published by **MTV_identifyErrors** Unity project Engine v 2022.1.7f1.  The model viewer task is to identify errors in the scene:
+
+Variant of BCIT Unity Task Viewer web handler for builds published by **MTV_identifyErrors Unity project** Engine v 2022.1.7f1.  The model viewer task is to identify errors in the scene:
 
 - Objects in scene that are errors will be named with suffix `- ERROR`.
 
-Web handler will:
+This web handler will:
 
-- Handle scene loading
+- Set up all the required UI elements
+- Handle Unity scene loading and comms
 - Read HTML table for optional description overrides for items specified in table
 - Set up the Checklist self-quiz component:
   - Creates list from scene items
@@ -28,7 +30,7 @@ Using npm and webpack. Use `npm install` to get started.
 
 1. Build to `uploads` folder using webpack.  
 2. Upload `uploads` folder contents to host / cdn.
-3. (if changed) Update the script src `.../bundle.css` and `.../bundle.js` in the Unity project's `Assets\WebGLTemplates\webD2LTable\index.html` to point to host location.
+3. (if changed) Update the script src `.../bundle.css` and `.../bundle.js` in the **Unity project**'s `Assets\WebGLTemplates\webD2LTable\index.html` to point to host location.
 
 #### Host options ####
 
@@ -48,7 +50,7 @@ See `main.js`.
 
 #### Loading WebGL ####
 
-The `LoadUnity` code in `Loader.ts` is for Unity WebGL builds from engine version 2022.x.  
+The `LoadUnity` code in `LoaderSetup.ts` is for Unity WebGL builds from engine version 2022.x.  
 Refer to the latest Unity engine documentation if another version of Unity editor was used for the build.
 
 #### FromUnity handlers ####
@@ -86,7 +88,7 @@ Where the `[project name]` should be descriptive of the scene.
 
 #### Template index.html ####
 
-This file is built by the Unity Project. Template for the `index.html` page is in the Unity project: `Assets\WebGLTemplates\webD2LTable` folder.  
+This file is built by the **Unity Project**. Template for the `index.html` page is in the **Unity project**: `Assets\WebGLTemplates\webD2LTable` folder.  
 
 ##### host src #####
 

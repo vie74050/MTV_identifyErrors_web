@@ -1,6 +1,18 @@
+import $ from "jquery";
+
 const canvasid = "unity-canvas";
 
 export function LoadUnity() {
+    const loader = `<div id="loading-cover">
+                      <div id="logo"></div> 
+                      <div id="unity-loading-bar">        
+                      <div id="unity-progress-bar-empty" ></div>
+                          <div id="unity-progress-bar-full"></div>
+                      </div>
+                      <div class="spinner"></div>
+                    </div> </div>`;
+    $("body").prepend($(loader));
+
     const location = window.location.pathname;
     const path = location.substring(0, location.lastIndexOf("/"));
     const folderName = path.substring(path.lastIndexOf("/")+1);

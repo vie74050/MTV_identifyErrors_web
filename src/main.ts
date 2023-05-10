@@ -1,6 +1,5 @@
-import { QuizSetUp } from './UI/QuizSetUp';
+import { UpdateQuizList } from './UI/QuizSetUp';
 import { SetupUI } from './UI/Setup';
-import { LoadUnity } from './Loader';
 import './scss/styles.scss'; 
 import $ from "jquery";
 require('../node_modules/jquery-ui-dist/jquery-ui.min.js');
@@ -15,12 +14,9 @@ declare global {
 	}
 }
 
-/** Unity Loading */
+/** Create UI */
 $(function(){
 	SetupUI();
-	
-	LoadUnity(); 
-
 });
 
 // Handles communication coming from Unity Object to page
@@ -61,6 +57,6 @@ window.FromUnity_ApplicationStarted = function() {
 window.FromUnity_SetListItems = function(str) {
 	let itemsInScene = str.split("\\");
 	
-	QuizSetUp(itemsInScene);
+	UpdateQuizList(itemsInScene);
 	//console.log("reset new list");
 }

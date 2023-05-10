@@ -1,44 +1,29 @@
 import $ from "jquery";
 import { GetTableData } from "./GetTableData";
 
-const dialogid = "#dialog-quiz";
-const dialogBtnId = "#dialog-quiz-btn";
-const listContainerId = "#list-items-container";
+const dialogid : string = "dialog-quiz";
+const listContainerId : string = "list-items-container";
+const dialogBtnId : string = "dialog-quiz-btn";
 
-function UpdateQuizList(listAr) {
-	// set up list content
-	const $container = $(listContainerId);
-	const tableDataAr = GetTableData();
+/** The GUI setup for the check list items 
+ * @param string btnParentId The selector to parent trigger button
+*/
+export function QuizSetUp(btnParentId : string = "body") {
+	const quizui = `<div id="`+dialogid+`" title="Select all problematic items">
+					<div id="`+listContainerId+`"></div></div>`;
+	const triggerbtn = `<button id="`+dialogBtnId+`">Checklist</button>`;
 
-	$container.empty();
-	listAr.forEach((v, i) => {
-		const txt = v;
-		const $line = $('<p/>');
-		const $input = $('<input type="checkbox">');
-		const $label = $('<label>' + txt.replace('- ERROR', '') + '</label>');
-		const $fbBtn = $('<button type="button" class="fb-btn" id="btn-' + i + '">?</button>');
+	$("body").prepend($(quizui));
+	$(btnParentId).append($(triggerbtn));
 
-		$line.append($input, $label);
-		if (v.indexOf('ERROR') > 0) {
-			let descRomTable = tableDataAr.find(row => row[0].trim() == txt.trim());
-			let desc = descRomTable ? descRomTable[1] : txt;
-			$fbBtn.attr('title', desc);
-			$line.append($fbBtn);
-			$fbBtn.hide();
-		}
-		$container.append($line);
-	});
-}
-
-/** The GUI setup for the check list items */
-export function QuizSetUp(listAr) {
 	const pos = { my: "right bottom", at: "right bottom", of: window };
-	let $btn = $(dialogBtnId);
-	let $dialog = $(dialogid);
+	
+	let $dialog = $("#"+dialogid);
+	let $btn = $("#"+dialogBtnId);
+
 	if ($dialog.length !== 0) {
 		
-		// initialize UI dialog elems
-		$dialog = $(dialogid);		
+		// initialize UI dialog
 	
 		var h = $("canvas").height(); 
 		$dialog.dialog({
@@ -80,10 +65,35 @@ export function QuizSetUp(listAr) {
 				}
 			]
 		});
-
 	}
-	
-	UpdateQuizList(listAr);
+}
+
+/** Update list items */
+export function UpdateQuizList(listAr) {
+	const $btn = $("#"+dialogBtnId);
+	const $dialog = $("#"+dialogid);
+	// set up list content
+	const $container = $("#"+listContainerId);
+	const tableDataAr = GetTableData();
+
+	$container.empty();
+	listAr.forEach((v, i) => {
+		const txt = v;
+		const $line = $('<p/>');
+		const $input = $('<input type="checkbox">');
+		const $label = $('<label>' + txt.replace('- ERROR', '') + '</label>');
+		const $fbBtn = $('<button type="button" class="fb-btn" id="btn-' + i + '">?</button>');
+
+		$line.append($input, $label);
+		if (v.indexOf('ERROR') > 0) {
+			let descRomTable = tableDataAr.find(row => row[0].trim() == txt.trim());
+			let desc = descRomTable ? descRomTable[1] : txt;
+			$fbBtn.attr('title', desc);
+			$line.append($fbBtn);
+			$fbBtn.hide();
+		}
+		$container.append($line);
+	});
 
 	// reset UI
 	if ($dialog.dialog("isOpen")) {
