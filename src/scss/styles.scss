@@ -45,6 +45,7 @@ html, body {
 }
 
 .instructions{
+    display: flex;
 	background-color: #ee3;
 	padding: 2px 10px;
     color: #555;
@@ -52,8 +53,37 @@ html, body {
     vertical-align: middle;
     box-sizing: border-box;
 
+    b {
+        margin-right: 0.5em;
+        &:not(:first-child) {
+            padding-left: 0.5em;
+            margin-left: 0.5em;
+            border-left: 1px solid #555;
+        }
+    }
+    .icon {
+        display: inline-block;
+        width: 30px;
+        height: 40px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-position-y: 0;
+
+        &.mouse_lf {
+            background-image: url(https://learn.bcit.ca/shared/scripts/interactive/UnityModelViewerTemplateData/mouse-lf.png);
+        }
+
+        &.mouse_rt {
+            background-image: url(https://learn.bcit.ca/shared/scripts/interactive/UnityModelViewerTemplateData/mouse-rt.png);
+        }
+
+        &.mouse_wheel {
+            background-image: url(https://learn.bcit.ca/shared/scripts/interactive/UnityModelViewerTemplateData/mouse-wheel.png);
+        }
+    }
+
     #dialog-quiz-btn{
-        float: right;
+        margin-left: auto;
         font-size: 14px;
         &::after{
             content: "+";

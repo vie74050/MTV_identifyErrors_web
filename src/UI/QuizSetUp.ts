@@ -5,60 +5,7 @@ const dialogid = "#dialog-quiz";
 const dialogBtnId = "#dialog-quiz-btn";
 const listContainerId = "#list-items-container";
 
-/** The GUI setup for the check list items */
-export function QuizSetUp(listAr) {
-	// initialize UI dialog elems
-	const $dialog = $(dialogid);
-	const $btn = $(dialogBtnId);
-	
-	const pos = { my: "right bottom", at: "right bottom", of: window };
-	var h = $("canvas").height(); 
-	$dialog.dialog({
-		//draggable: false,
-		autoOpen: false,
-		resizable: false,
-		position: pos,
-		minWidth: 200, maxWidth: 400,
-		height: h,
-		create: function (event, ui) {
-			$btn.on("mousedown", function () {
-
-				if ($dialog.dialog("isOpen")) {
-					$dialog.dialog("close");
-					$btn.removeClass("btn-open");
-				} else {
-					$dialog.dialog("open");
-					$btn.addClass("btn-open");
-				}
-
-			});
-		},
-		open: function (event, ui) {
-			h = $("canvas").height(); 
-			$(this).dialog("option", "height", h);
-			$(this).dialog("option", "maxHeight", h);
-			$(this).dialog("option", "position", pos);
-		},
-		close: function (event, ui) {
-			$btn.removeClass("btn-open");
-			$(".fb-btn").hide();
-		},
-		buttons: [
-			{
-				text: "Check Answers",
-				click: function () {
-					$(".fb-btn").show();
-				}
-			}
-		]
-	});
-
-	// reset UI
-	if ($dialog.dialog("isOpen")) {
-		$dialog.dialog("close");
-		$btn.removeClass("btn-open");
-	}
-
+function UpdateQuizList(listAr) {
 	// set up list content
 	const $container = $(listContainerId);
 	const tableDataAr = GetTableData();
@@ -81,5 +28,66 @@ export function QuizSetUp(listAr) {
 		}
 		$container.append($line);
 	});
+}
 
+/** The GUI setup for the check list items */
+export function QuizSetUp(listAr) {
+	const pos = { my: "right bottom", at: "right bottom", of: window };
+	let $btn = $(dialogBtnId);
+	let $dialog = $(dialogid);
+	if ($dialog.length !== 0) {
+		
+		// initialize UI dialog elems
+		$dialog = $(dialogid);		
+	
+		var h = $("canvas").height(); 
+		$dialog.dialog({
+			//draggable: false,
+			autoOpen: false,
+			resizable: false,
+			position: pos,
+			minWidth: 200, maxWidth: 400,
+			height: h,
+			create: function (event, ui) {
+				$btn.on("mousedown", function () {
+
+					if ($dialog.dialog("isOpen")) {
+						$dialog.dialog("close");
+						$btn.removeClass("btn-open");
+					} else {
+						$dialog.dialog("open");
+						$btn.addClass("btn-open");
+					}
+
+				});
+			},
+			open: function (event, ui) {
+				h = $("canvas").height(); 
+				$(this).dialog("option", "height", h);
+				$(this).dialog("option", "maxHeight", h);
+				$(this).dialog("option", "position", pos);
+			},
+			close: function (event, ui) {
+				$btn.removeClass("btn-open");
+				$(".fb-btn").hide();
+			},
+			buttons: [
+				{
+					text: "Check Answers",
+					click: function () {
+						$(".fb-btn").show();
+					}
+				}
+			]
+		});
+
+	}
+	
+	UpdateQuizList(listAr);
+
+	// reset UI
+	if ($dialog.dialog("isOpen")) {
+		$dialog.dialog("close");
+		$btn.removeClass("btn-open");
+	}
 }
