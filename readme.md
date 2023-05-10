@@ -38,7 +38,7 @@ BCIT: Manually upload to LMS shared files `scripts/interactive/UnityModelTaskVie
 
 ##### Github (Public) #####
 
-Requires repo to be public with Pages enabled. The src path to `uploads` will be `http(s)://<username>.github.io/<repository> `.
+Requires repo to be public with Pages enabled. The src path to `uploads` will be `http(s)://<username>.github.io/<repository>`.
 
 > e.g. `https://vie74050.github.io/MTV_identifyErrors_web/bundle.js`
 
@@ -48,7 +48,7 @@ See `main.js`.
 
 #### Loading WebGL ####
 
-The `LoadUnity` code in `main.js` is for Unity WebGL builds from engine version 2022.x.  
+The `LoadUnity` code in `Loader.ts` is for Unity WebGL builds from engine version 2022.x.  
 Refer to the latest Unity engine documentation if another version of Unity editor was used for the build.
 
 #### FromUnity handlers ####
@@ -59,7 +59,7 @@ Calls from Unity scene to web are handled by methods prefixed `FromUnity_` and m
 - `window.FromUnity_Select`
 - `window.FromUnity_SetListItems`
 
-Which must correspond to the functions called in the Unity project `Assets\Plugins\JSLibs`.
+Which must correspond to the functions called in the **Unity Project** `Assets\Plugins\JSLibs`.
 
 ## Usage ##
 
@@ -67,7 +67,7 @@ Which must correspond to the functions called in the Unity project `Assets\Plugi
 
 **Unity Project** Repo: [gihub MTV_identifyErrors](https://github.com/vie74050/MTV_identifyErrors)
 
-See `AesculapPan` build folder, included as a sample.  The actual resources within are all built from the Unity Project, and not part of the scope of this repo.
+See `AesculapPan` build folder, included as a sample.  The actual resources within are all built from the **Unity Project**, and not part of the scope of this repo.
 
 The build folder for the Unity model should have the structure:
 
@@ -82,9 +82,9 @@ Where the `[project name]` should be descriptive of the scene.
 **NB**:
 
 - You only need to create the main project folder `[project name]` and build to that folder from Unity.  It will create the `Build` folder automatically and it's build artefacts will be named according to `[project name]`
-- Server hosting the model files need to be set up to serve gz compression.  See `.htaccess` file (add this to host folder).
+- Server hosting the model files need to be set up to serve gz compression.  See `.htaccess` file (add this to host).
 
-#### index.html ####
+#### Template index.html ####
 
 This file is built by the Unity Project. Template for the `index.html` page is in the Unity project: `Assets\WebGLTemplates\webD2LTable` folder.  
 
