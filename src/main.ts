@@ -23,7 +23,7 @@ $(function(){
 
 /** Unity SelectableObject broadcasts string `transform_name` on Select */ 
 window.FromUnity_Select = function(transform_name) {
-	//console.log(transform_name + " selected");
+	
 	/*
 	var $dialog = $("#hs_popup");
 	
