@@ -30,7 +30,7 @@ Using npm and webpack. Use `npm install` to get started.
 ##### Github as CDN #####
 
 - Push to remote server and serve from `https://cdn.jsdelivr.net/gh/<username>/<repository>/<file>`
-> e.g. `https://vie74050.github.io/MTV_identifyErrors_web/bundle.js`
+> e.g. `https://cdn.jsdelivr.net/gh/vie74050.github.io/MTV_identifyErrors_web/uploads/bundle.js`
 
 ##### LMS (Private) #####
 
