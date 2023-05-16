@@ -24,15 +24,13 @@ Using npm and webpack. Use `npm install` to get started.
 
 - For dev, use `npm run start` for watch mode.
 - For prod, build `npm run build`.  
-- Deploy to github pages (optional): `npm run deploy`
 
 #### Host options ####
 
-##### Github (Public) #####
+##### Github as CDN #####
 
-Requires repo to be public with Pages enabled. The src path to `uploads` will be `http(s)://<username>.github.io/<repository>`.
-
-> e.g. `https://vie74050.github.io/MTV_identifyErrors_web/bundle.js`
+- Push to remote server and serve from `https://cdn.jsdelivr.net/gh/<username>/<repository>/<file>`
+> e.g. `https://cdn.jsdelivr.net/gh/vie74050.github.io/MTV_identifyErrors_web/uploads/bundle.js`
 
 ##### LMS (Private) #####
 
