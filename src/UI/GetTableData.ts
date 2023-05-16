@@ -3,7 +3,7 @@ import $ from "jquery";
 /** Requires a <table> element in HTML body.  Reads the table and converts to array of rows to return.
  * Column 1 = key Item name from Unity game object
  * Column 2 = html content (description)
- * @returns {object} Returns table data as array of rows
+ * @returns {string[][]} Returns table data as array of rows [td1, td2] 
  */
 
 export function GetTableData() {

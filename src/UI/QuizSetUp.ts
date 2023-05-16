@@ -5,6 +5,8 @@ const dialogid : string = "dialog-quiz";
 const listContainerId : string = "list-items-container";
 const dialogBtnId : string = "dialog-quiz-btn";
 
+var tableDataAr : string[][];
+
 /** The GUI setup for the check list items 
  * @param string btnParentId The selector to parent trigger button
 */
@@ -13,6 +15,8 @@ export function QuizSetUp(btnParentId : string = "body") {
 					<div id="`+listContainerId+`"></div></div>`;
 	const triggerbtn = `<button id="`+dialogBtnId+`">Checklist</button>`;
 
+	tableDataAr = GetTableData();
+	
 	$("body").prepend($(quizui));
 	$(btnParentId).append($(triggerbtn));
 
@@ -74,14 +78,13 @@ export function UpdateQuizList(listAr) {
 	const $dialog = $("#"+dialogid);
 	// set up list content
 	const $container = $("#"+listContainerId);
-	const tableDataAr = GetTableData();
-
+	
 	$container.empty();
 	listAr.forEach((v, i) => {
 		const txt = v;
 		const $line = $('<p/>');
 		const $input = $('<input type="checkbox">');
-		const $label = $('<label>' + txt.replace('- ERROR', '') + '</label>');
+		const $label = $('<label>' + txt.replace(/- ERROR([ 0-9, \w+ \  ]*)/, '') + '</label>');
 		const $fbBtn = $('<button type="button" class="fb-btn" id="btn-' + i + '">?</button>');
 
 		$line.append($input, $label);
