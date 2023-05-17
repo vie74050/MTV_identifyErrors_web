@@ -149,21 +149,24 @@ canvas {
         input[type="checkbox"]:active{
             outline-offset: 2px;
         }
-        button.fb-btn {
-            width: 13px;
-            height: fit-content;
-            font-size: 13px;
-            padding: 2px;
-            line-height: 13px;
-            box-sizing: content-box;
-            background: #ff0000;
-            color: white;
-            border-radius: 50%;
-            font-weight: 800;
-            border-color: red;
-        }
+        
     }
     
+    .fb-icon {
+        display: inline-block;
+        text-align: center;
+        width: 13px;
+        height: fit-content;
+        font-size: 13px;
+        padding: 2px;
+        line-height: 13px;
+        box-sizing: content-box;
+        background: #ff0000;
+        color: white;
+        border-radius: 50%;
+        font-weight: 800;
+        border-color: red;
+    }
 }
 
 .ui-tooltip {

@@ -1,8 +1,9 @@
 import $ from "jquery";
 import { GetTableData } from "./GetTableData";
 
-const dialogid : string = "dialog-quiz";
+const dialogId : string = "dialog-quiz";
 const listContainerId : string = "list-items-container";
+const quizInfoId : string = "dialog-quiz-info";
 const dialogBtnId : string = "dialog-quiz-btn";
 
 var tableDataAr : string[][];
@@ -11,8 +12,9 @@ var tableDataAr : string[][];
  * @param string btnParentId The selector to parent trigger button
 */
 export function QuizSetUp(btnParentId : string = "body") {
-	const quizui = `<div id="`+dialogid+`" title="Select all problematic items">
-					<div id="`+listContainerId+`"></div></div>`;
+	const quizui = `<div id="`+dialogId+`" title="Select all problematic items">
+					<div id="`+listContainerId+`"></div>
+					<div id="`+quizInfoId+`"></div></div>`;
 	const triggerbtn = `<button id="`+dialogBtnId+`">Checklist</button>`;
 
 	tableDataAr = GetTableData();
@@ -22,13 +24,12 @@ export function QuizSetUp(btnParentId : string = "body") {
 
 	const pos = { my: "right bottom", at: "right bottom", of: window };
 	
-	let $dialog = $("#"+dialogid);
+	let $dialog = $("#"+dialogId);
 	let $btn = $("#"+dialogBtnId);
 
 	if ($dialog.length !== 0) {
 		
 		// initialize UI dialog
-	
 		var h = $("canvas").height(); 
 		$dialog.dialog({
 			//draggable: false,
@@ -57,14 +58,27 @@ export function QuizSetUp(btnParentId : string = "body") {
 				$(this).dialog("option", "position", pos);
 			},
 			close: function (event, ui) {
+				const $fbs = $("button.fb-icon");
+				const $info = $("#"+quizInfoId);
 				$btn.removeClass("btn-open");
-				$(".fb-btn").hide();
+				$fbs.hide();
+				$info.text("");
 			},
 			buttons: [
 				{
 					text: "Check Answers",
 					click: function () {
-						$(".fb-btn").show();
+						const $fbs = $("button.fb-icon");
+						const $info = $("#"+quizInfoId);
+						
+						$fbs.show();
+						if ($fbs.length ==0) {
+							$info.text("There were no problematic items.");
+						}else {
+							$info.html('The problematic items are indicated. Hover over the <button class="fb-icon">?</button> icons to see details.')
+						}
+
+
 					}
 				}
 			]
@@ -75,7 +89,7 @@ export function QuizSetUp(btnParentId : string = "body") {
 /** Update list items */
 export function UpdateQuizList(listAr) {
 	const $btn = $("#"+dialogBtnId);
-	const $dialog = $("#"+dialogid);
+	const $dialog = $("#"+dialogId);
 	// set up list content
 	const $container = $("#"+listContainerId);
 	
@@ -85,7 +99,7 @@ export function UpdateQuizList(listAr) {
 		const $line = $('<p/>');
 		const $input = $('<input type="checkbox">');
 		const $label = $('<label>' + txt.replace(/- ERROR([ 0-9, \w+ \  ]*)/, '') + '</label>');
-		const $fbBtn = $('<button type="button" class="fb-btn" id="btn-' + i + '">?</button>');
+		const $fbBtn = $('<button type="button" class="fb-icon" id="btn-' + i + '">?</button>');
 
 		$line.append($input, $label);
 		if (v.indexOf('ERROR') > 0) {
