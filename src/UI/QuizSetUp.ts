@@ -13,8 +13,9 @@ var tableDataAr : string[][];
 */
 export function QuizSetUp(btnParentId : string = "body") {
 	const quizui = `<div id="`+dialogId+`" title="Select all problematic items">
+					<div id="`+quizInfoId+`"></div>
 					<div id="`+listContainerId+`"></div>
-					<div id="`+quizInfoId+`"></div></div>`;
+					</div>`;
 	const triggerbtn = `<button id="`+dialogBtnId+`">Checklist</button>`;
 
 	tableDataAr = GetTableData();
