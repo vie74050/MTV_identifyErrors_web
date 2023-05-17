@@ -16,7 +16,7 @@ export function QuizSetUp(btnParentId : string = "body") {
 					<div id="`+quizInfoId+`"></div>
 					<div id="`+listContainerId+`"></div>
 					</div>`;
-	const triggerbtn = `<button id="`+dialogBtnId+`">Checklist</button>`;
+	const triggerbtn = `<button title="Show/Hide Checklist" id="`+dialogBtnId+`">Checklist</button>`;
 
 	tableDataAr = GetTableData();
 	
