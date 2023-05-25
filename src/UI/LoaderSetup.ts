@@ -1,6 +1,6 @@
 import $ from "jquery";
-
 const canvasid = "unity-canvas";
+var UnityInstance = null;
 
 export function LoadUnity() {
     const loader = `<div id="loading-cover">
@@ -57,10 +57,70 @@ export function LoadUnity() {
       })
         .then((unityInstance) => {
           loadingCover.style.display = "none";
+          UnityInstance = unityInstance;
         })
         .catch((message) => {
           alert(message);
         });
     };
     document.body.appendChild(script);
+
+    InitFromUnity();
 } 
+export function UnityResetAll() {
+  UnityInstance.SendMessage('Main', 'ResetAll');
+}
+
+// Handles communication coming from Unity Object to page
+import { UpdateQuizList } from './QuizSetUp';
+declare global {
+  interface Window { 
+    FromUnity_Select: Function, 
+    FromUnity_ApplicationStarted: Function, 
+    FromUnity_SetListItems: Function,
+    createUnityInstance: Function
+  }
+}
+
+function InitFromUnity() {
+  /** Unity SelectableObject broadcasts string `transform_name` on Select */ 
+  window.FromUnity_Select = function(transform_name) {
+    
+    /*
+    var $dialog = $("#hs_popup");
+    
+    $dialog.dialog("close");
+    
+    var key = transform_name.trim();
+    if (key in data){
+      $dialog.html(data[key])
+        .dialog( "option", {
+          "title": transform_name
+        } )
+        .dialog( "open" );
+    }
+    */
+    
+  }
+
+  /** Method called from Unity on Start */
+  window.FromUnity_ApplicationStarted = function() {
+    $(".progress").hide();
+    $(".loading").removeClass("loading");
+        
+    // let web app know that Unity object is ready 
+    $(document).trigger("ApplicationStarted");
+  }
+
+  /** Called by Unity on Start to set list of names for g.o of interest in scene 
+   *  string delimited by \
+   *  NB: Error objects names suffixed by "- ERROR"
+  */
+  window.FromUnity_SetListItems = function(str) {
+    let itemsInScene = str.split("\\");
+    
+    UpdateQuizList(itemsInScene);
+    //console.log("reset new list");
+  }
+
+}

@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { GetTableData } from "./GetTableData";
+import { UnityResetAll } from "./LoaderSetup";
 
 const dialogId : string = "dialog-quiz";
 const listContainerId : string = "list-items-container";
@@ -17,11 +18,23 @@ export function QuizSetUp(btnParentId : string = "body") {
 					<div id="`+listContainerId+`"></div>
 					</div>`;
 	const triggerbtn = `<button title="Show/Hide Checklist" id="`+dialogBtnId+`">Checklist</button>`;
-
+	
 	tableDataAr = GetTableData();
 	
 	$("body").prepend($(quizui));
 	$(btnParentId).append($(triggerbtn));
+
+	let prompts = {
+		info: '',
+		showanswersprompt: 'Hover over the <button class="fb-icon">?</button> icons for details.'
+	}
+	// custom prompts
+	if( tableDataAr.find(row => row[0].trim() == "Info prompt") ) {
+		prompts.info = tableDataAr.find(row => row[0].trim())[1];
+	}
+	if ( tableDataAr.find(row => row[0].trim() == "Show answers prompt") ) {
+		prompts.showanswersprompt = tableDataAr.find(row => row[0].trim() == "Show answers prompt")[1].replace('?','<button class="fb-icon">?</button>');
+	}
 
 	const pos = { my: "right bottom", at: "right bottom", of: window };
 	
@@ -57,17 +70,20 @@ export function QuizSetUp(btnParentId : string = "body") {
 				$(this).dialog("option", "height", h);
 				$(this).dialog("option", "maxHeight", h);
 				$(this).dialog("option", "position", pos);
-			},
-			close: function (event, ui) {
+
 				const $fbs = $("button.fb-icon");
 				const $info = $("#"+quizInfoId);
-				$btn.removeClass("btn-open");
+				
 				$fbs.hide();
-				$info.text("");
+				$info.text(prompts.info);
+			},
+			close: function (event, ui) {
+				$btn.removeClass("btn-open");
 			},
 			buttons: [
 				{
 					text: "Check Answers",
+					id: "chkBtn",
 					click: function () {
 						const $fbs = $("button.fb-icon");
 						const $info = $("#"+quizInfoId);
@@ -76,10 +92,18 @@ export function QuizSetUp(btnParentId : string = "body") {
 						if ($fbs.length ==0) {
 							$info.text("There were no problematic items.");
 						}else {
-							$info.html('The problematic items are indicated. Hover over the <button class="fb-icon">?</button> icons to see details.')
+							$info.html(prompts.showanswersprompt);
 						}
 
-
+						$("#chkBtn").hide();
+						$("#newSceneBtn").show();
+					}
+				},
+				{
+					text: "New Scene",
+					id: "newSceneBtn",
+					click: function() {
+						newSceneHandler();
 					}
 				}
 			]
@@ -114,8 +138,17 @@ export function UpdateQuizList(listAr) {
 	});
 
 	// reset UI
-	if ($dialog.dialog("isOpen")) {
-		$dialog.dialog("close");
-		$btn.removeClass("btn-open");
+	if (!$dialog.dialog("isOpen")) {
+		$dialog.dialog("open");
+		$btn.addClass("btn-open");
+		
+		$("#chkBtn").show();
+		$("#newSceneBtn").hide();
 	}
+}
+
+function newSceneHandler() {
+	
+	UnityResetAll();
+
 }

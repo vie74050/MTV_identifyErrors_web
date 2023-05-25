@@ -123,20 +123,19 @@ canvas {
         input[type="checkbox"]{    
             -webkit-appearance: initial;
             appearance: initial;
-            background: #bbb;
+            background: #fff;
             width: 20px;
             height: 20px;
-            border: none;
+            border: 1px solid #333;
             position: relative;
             margin: 0;
         }
         input[type="checkbox"]:checked {
-            background: yellow;
+            background: rgb(255, 255, 0);
         }
         input[type="checkbox"]:checked:after {
-            /* Heres your symbol replacement */
-            content: "\2716";
-            color: red;
+            content: "\26D4";
+            color: rgb(255, 0, 0);
             position: absolute;
             left: 50%;
             top: 50%;
