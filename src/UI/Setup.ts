@@ -1,6 +1,6 @@
 import $ from "jquery";
-import { QuizSetUp } from "./QuizSetUp";
-import { LoadUnity } from './LoaderSetup';
+import { QuizUISetUp } from "./QuizSetUp";
+import { LoadUnity } from './UnityLoaderSetup';
 
 export function SetupUI() {
     const header = `<div id="header" class="mmd instructions">
@@ -14,7 +14,7 @@ export function SetupUI() {
 
     LoadUnity(); 
 
-    QuizSetUp("#header");
+    QuizUISetUp("#header");
     $( document ).tooltip();
    
 }

@@ -114,17 +114,21 @@ canvas {
             flex-direction: row;
             margin: 0.5em 0;
             vertical-align: middle;
-            align-items: center;
+            align-items: flex-start;
         }
         label {
             font-weight: normal;
             margin: 0 0.5em;
+            flex-grow: 1;
         }
         input[type="checkbox"]{    
             -webkit-appearance: initial;
             appearance: initial;
             background: #fff;
             width: 20px;
+            flex-basis: 20px;
+            flex-grow: 0;
+            flex-shrink: 0;
             height: 20px;
             border: 1px solid #333;
             position: relative;
@@ -134,7 +138,7 @@ canvas {
             background: rgb(255, 255, 0);
         }
         input[type="checkbox"]:checked:after {
-            content: "\26D4";
+            content: "\2691";
             color: rgb(255, 0, 0);
             position: absolute;
             left: 50%;
@@ -155,6 +159,8 @@ canvas {
         display: inline-block;
         text-align: center;
         width: 13px;
+        flex-grow: 0;
+        flex-shrink: 0;
         height: fit-content;
         font-size: 13px;
         padding: 2px;
@@ -165,8 +171,13 @@ canvas {
         border-radius: 50%;
         font-weight: 800;
         border-color: red;
-    }
 
+        &.correct {
+            background: green;
+            border-color: rgb(0, 104, 9);
+        }
+    }
+    
     #dialog-quiz-info{
         background-color: lightblue;
         margin: -1em -1em 1em;

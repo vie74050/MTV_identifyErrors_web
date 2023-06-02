@@ -4,8 +4,9 @@
   "description": "Model Task Viewer - identify errors",
   "scripts": {
     "start": "webpack --watch --config webpack.dev.js",
+    "update3d": "cp -r ./Builds ./uploads",
     "build": "webpack --config webpack.prod.js",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && npm run update3d",
     "deploy": "gh-pages -d uploads"
   },
   "dependencies": {
