@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target":"ES6",
+    "lib": ["es5", "es6", "dom", "dom.Iterable"],
+    "rootDir": "src",
+    "outDir": "./built",
+  },
+  "scripts": [
+    "./node_modules/jquery/dist/jquery.min.js",
+    "./node_modules/jquery-ui-dist/jquery-ui.min.js"
+  ],
+  "exclude": ["uploads/**"]
+}
