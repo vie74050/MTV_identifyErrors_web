@@ -11,7 +11,7 @@ var tableDataAr : string[][];
 var prompts = {
 	info: 'Select all problematic issues. Click Submit to proceed.',
 	showanswersprompt: 'Hover over the icons for details.',
-	noerrors: 'There are no errors in this scene.',
+	noerrors: 'There are no issues in this scene.',
 	itemok: 'This item is oK',
 	endgame: 'Completed all all tasks!'
 }
@@ -118,12 +118,13 @@ export function UpdateQuizList(listAr) {
 		const $label = $('<label>' + v.replace(/- ERROR([ 0-9, \w+ \  ]*)/, '') + '</label>');
 		
 		$line.append($input, $label);
+		let descFromTable = tableDataAr.find(row => row[0].trim() == v.trim());
+		let desc = descFromTable ? descFromTable[1] : v;
+		$input.data("desc", desc);
 		if (v.indexOf('ERROR') > 0) {
-			let descRomTable = tableDataAr.find(row => row[0].trim() == v.trim());
-			let desc = descRomTable ? descRomTable[1] : v;
-			$input.addClass("_e_").data("desc", desc);
+			$input.addClass("_e_")
 		}
-				
+						
 		$container.append($line);
 	});
 
@@ -183,7 +184,9 @@ function submitQuizHandler() {
 		fb_text = prompts.noerrors;
 
 		if ($inputs_not_e_checked.length != 0) {
-			fb_text = "Incorrect. " + prompts.noerrors;
+			fb_text = "Incorrect! " + prompts.noerrors;
+		}else {
+			fb_text = "Correct! " + prompts.noerrors;
 		}
 
 		$("#newSceneBtn").hide();
