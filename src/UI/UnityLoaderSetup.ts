@@ -110,12 +110,12 @@ function InitFromUnity() {
   }
 
   /** Scene Start handler: called from Unity main>ActivityController>Start */
-  window.FromUnity_ApplicationStarted = function() {
+  window.FromUnity_ApplicationStarted = function(str) {
     $(".progress").hide();
     $(".loading").removeClass("loading");
         
     // let web app know that Unity object is ready 
-    //$(document).trigger("ApplicationStarted");
+    $(document).trigger("ApplicationStarted");
     
     //UnityInstance.SendMessage('Main', 'SetBrowserItemsList'); // calls FromUnity_SetListItems when updated
   }
