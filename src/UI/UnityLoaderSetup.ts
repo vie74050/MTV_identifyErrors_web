@@ -79,12 +79,17 @@ export function LoadUnity() {
 } 
 
 // SendMessage Methods: calls to Unity 
-export function UnityResetAll() {
-  UnityInstance.SendMessage('Main', 'ResetAll');
+export function UnityResetScene() {
+  // reloads active scene
+  UnityInstance.SendMessage('Main', 'ResetScene');
 }
 
 export function UnityLoadNextScene() {
   UnityInstance.SendMessage('Main', 'LoadNextScene');
+}
+
+export function UnityLoadScene(n) {
+  UnityInstance.SendMessage('Main', 'LoadScene', n);
 }
 
 // Handles communication coming from Unity Object to page
@@ -115,9 +120,8 @@ function InitFromUnity() {
     $(".loading").removeClass("loading");
         
     // let web app know that Unity object is ready 
-    $(document).trigger("ApplicationStarted");
+    console.log(str + " scene started");
     
-    //UnityInstance.SendMessage('Main', 'SetBrowserItemsList'); // calls FromUnity_SetListItems when updated
   }
 
   /** Called by Unity SetBrowserItemsList once all S.O list items retrieved 
@@ -132,6 +136,8 @@ function InitFromUnity() {
   }
 
   window.FromUnity_EndGame = function() {
+    // unity calls this when UnityLoadNextScene results in no more scenes
+    UnityInstance.SendMessage('Main', 'ResetEOCOUNTER');
     EndGame();
   }
 

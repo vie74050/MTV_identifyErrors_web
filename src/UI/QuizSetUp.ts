@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { GetTableData } from "./GetTableData";
-import { UnityLoadNextScene, UnityResetAll } from "./UnityLoaderSetup";
+import { UnityLoadNextScene, UnityResetScene, UnityLoadScene } from "./UnityLoaderSetup";
 
 const dialogId : string = "dialog-quiz";
 const listContainerId : string = "list-items-container";
@@ -13,7 +13,7 @@ var prompts = {
 	showanswersprompt: 'Hover over the icons for details.',
 	noerrors: 'There are no issues in this scene.',
 	itemok: 'This item is oK',
-	endgame: 'Completed all all tasks!'
+	endgame: 'Completed all all tasks!  Play again?'
 }
 
 /** The GUI setup for the check list items 
@@ -119,7 +119,7 @@ export function UpdateQuizList(listAr) {
 		
 		$line.append($input, $label);
 		let descFromTable = tableDataAr.find(row => row[0].trim() == v.trim());
-		let desc = descFromTable ? descFromTable[1] : v;
+		let desc = descFromTable ? descFromTable[1] : prompts.itemok;
 		$input.data("desc", desc);
 		if (v.indexOf('ERROR') > 0) {
 			$input.addClass("_e_")
@@ -133,7 +133,9 @@ export function UpdateQuizList(listAr) {
 
 /** Handles Fromunity_EndGame if called */
 export function EndGame() {
-	alert(prompts.endgame);
+	if (confirm(prompts.endgame)) {
+		UnityLoadScene(0);
+	  }
 }
 
 /** Resets the GUI elements and text to init state */
@@ -200,12 +202,10 @@ function submitQuizHandler() {
 	$info.html(fb_text);
 
 	$("#chkBtn").hide();
-	
-
 }
 
 function newQuizbtnHandler() {
-	UnityResetAll();
+	UnityResetScene();
 }
 
 function nextQuizbtnHandler() {
