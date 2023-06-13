@@ -13,8 +13,10 @@ var prompts = {
 	showanswersprompt: 'Hover over the icons for details.',
 	noerrors: 'There are no issues in this scene.',
 	itemok: 'This item is oK',
-	endgame: 'Completed all all tasks!  Play again?'
+	endgame: 'Completed all tasks'
 }
+/** Tracks total number of misidentified items */
+var numErrors = 0;
 
 /** The GUI setup for the check list items 
  * @param string btnParentId The selector to parent trigger button
@@ -133,9 +135,15 @@ export function UpdateQuizList(listAr) {
 
 /** Handles Fromunity_EndGame if called */
 export function EndGame() {
-	if (confirm(prompts.endgame)) {
+	let prompt = "Excellent work! " + prompts.endgame + "\n\nPlay again?";
+
+	if (numErrors > 0) {
+		prompt = prompts.endgame + "\n\nTotal misidentified: " + numErrors + ".  \n\nAim for 0 mistakes. Play again?  ";
+	}
+	if (confirm(prompt)) {
 		UnityLoadScene(0);
-	  }
+		numErrors = 0;
+	}
 }
 
 /** Resets the GUI elements and text to init state */
@@ -199,6 +207,7 @@ function submitQuizHandler() {
 		$("#newSceneBtn").show();
 	}
 
+	numErrors += $(".fb-icon:not(.correct)").length;
 	$info.html(fb_text);
 
 	$("#chkBtn").hide();
