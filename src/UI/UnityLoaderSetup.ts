@@ -116,9 +116,7 @@ function InitFromUnity() {
 
   /** Scene Start handler: called from Unity main>ActivityController>Start */
   window.FromUnity_ApplicationStarted = function(str) {
-    $(".progress").hide();
-    $(".loading").removeClass("loading");
-        
+    
     // let web app know that Unity object is ready 
     console.log(str + " scene started");
     
