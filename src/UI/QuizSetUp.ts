@@ -2,14 +2,17 @@ import $ from "jquery";
 import { GetTableData } from "./GetTableData";
 import { UnityLoadNextScene, UnityResetScene, UnityLoadScene } from "./UnityLoaderSetup";
 
+const sceneInfoId: string = "scene-info";
 const dialogId : string = "dialog-quiz";
 const listContainerId : string = "list-items-container";
 const quizInfoId : string = "dialog-quiz-info";
 const dialogBtnId : string = "dialog-quiz-btn";
+const allOKBtnId : string = "allOKbtn";
 
 var tableDataAr : string[][];
 var prompts = {
-	info: 'Select all problematic issues. Click Submit to proceed.',
+	startscene: 'Inspect the scene for issues, and choose one of the options above.',
+	quizinfo: 'Select all problematic issues. Click Submit to proceed.',
 	showanswersprompt: 'Hover over the icons for details.',
 	noerrors: 'There are no issues in this scene.',
 	itemok: 'This item is oK',
@@ -18,35 +21,48 @@ var prompts = {
 /** Tracks total number of misidentified items */
 var numErrors = 0;
 
-/** The GUI setup for the check list items 
+/** The GUI setup for the inspection check list items.
+ * Creates the HTML elements:
+ * - dialog component, id = dialogId & instantiates as jquery dialog component; 
+ * - quiz info text, id=quizInfo; 
+ * - list container, id=listContainerId
  * @param string btnParentId The selector to parent trigger button
 */
 export function QuizUISetUp(btnParentId : string = "body") {
-	const quizui = `<div id="`+dialogId+`" title="Inspection Report">
+		
+	if ($("#"+dialogId).length === 0) {
+		const quizui = `<div id="`+ sceneInfoId +`">Loading...</div>
+					<div id="`+dialogId+`" title="Inspection Report">
 					<div id="`+quizInfoId+`"></div>
 					<div id="`+listContainerId+`"></div>
 					</div>`;
-	const triggerbtn = `<button title="Show/Hide Checklist" id="`+dialogBtnId+`">Inspection Report</button>`;
-	
+		
+		// create elems if not in html
+		$("body").prepend($(quizui));
+		console.log("created dom elems", $("#"+dialogId));
+	}else{
+		console.log("found dom elems", $("#"+dialogId));
+	}
+
 	tableDataAr = GetTableData();
-	
-	$("body").prepend($(quizui));
-	$(btnParentId).append($(triggerbtn));
 
 	// custom prompts
 	const customInfoPrompt = tableDataAr.find(row => row[0].trim() == "Info prompt");
-	const customAnsPrompt = tableDataAr.find(row => row[0].trim() == "Show answers prompt");
 	if( customInfoPrompt ) {
-		prompts.info = customInfoPrompt[1] + " Click Submit to proceed.";
+		prompts.quizinfo = customInfoPrompt[1] + " Click Submit to proceed.";
 	}
+
+	const customAnsPrompt = tableDataAr.find(row => row[0].trim() == "Show answers prompt");
 	if ( customAnsPrompt ) {
 		prompts.showanswersprompt = customAnsPrompt[1].replace('?','<button class="fb-icon">?</button>');
 	}
 
+	const $allOKbtn = $(`<button class="quiz-btn right" id="` + allOKBtnId + `">No issues in scene</button>`);
+	const $dialogBtn = $(`<button class="quiz-btn" id="`+dialogBtnId+`">Report Issue(s)</button>`);
+	const $dialog = $("#"+dialogId);
 	const pos = { my: "right bottom", at: "right bottom", of: window };
-	
-	let $dialog = $("#"+dialogId);
-	let $btn = $("#"+dialogBtnId);
+
+	$(btnParentId).append($allOKbtn, $dialogBtn); 
 
 	if ($dialog.length !== 0) {
 		
@@ -60,16 +76,23 @@ export function QuizUISetUp(btnParentId : string = "body") {
 			minWidth: 200, maxWidth: 400,
 			height: h,
 			create: function (event, ui) {
-				$btn.on("mousedown", function () {
+				$dialogBtn.on("mousedown", function () {
 
 					if ($dialog.dialog("isOpen")) {
 						$dialog.dialog("close");
-						$btn.removeClass("btn-open");
+						$dialogBtn.removeClass("btn-open");
 					} else {
 						$dialog.dialog("open");
-						$btn.addClass("btn-open");
+						$dialogBtn.addClass("btn-open");
 					}
 
+				});
+
+				$allOKbtn.on("mousedown", function(){
+					$(this).prop("disabled", true);
+					submitBtnQuizHandler();
+					$dialog.dialog("open");
+					$dialogBtn.addClass("btn-open");
 				});
 			},
 			open: function (event, ui) {
@@ -79,36 +102,56 @@ export function QuizUISetUp(btnParentId : string = "body") {
 				$(this).dialog("option", "position", pos);
 			},
 			close: function (event, ui) {
-				$btn.removeClass("btn-open");
+				$dialogBtn.removeClass("btn-open");
 			},
 			buttons: [
 				{
 					text: "Submit",
 					id: "chkBtn",
 					click: function () {
-						submitQuizHandler();
+						submitBtnQuizHandler();
 					}
 				},
 				{
 					text: "New Scene",
 					id: "newSceneBtn",
 					click: function() {
-						newQuizbtnHandler();
+						newQuizBtnHandler();
 					}
 				},
 				{
 					text: "Next",
 					id: "nextBtn",
 					click: function() {
-						nextQuizbtnHandler();
+						nextQuizBtnHandler();
 					}
 				}
 			]
 		});
 	}
 }
+/** Handles FromUnity_ApplicationStarted */
+export function SceneStart( sceneName: string ) {
+	const $sceneInfo = $("#"+ sceneInfoId);
+	const descData = tableDataAr.find(row => 
+		row[0].trim().toLowerCase() == sceneName.trim().toLocaleLowerCase()
+	);
+	let desc = prompts.startscene;
 
-/** Handles FromUnity_SetListItems -> Update list items */
+	if (descData) {
+		desc = descData[1];
+	}else {
+		console.log("Scene name: " + sceneName + " not found in table" );
+	}
+
+	if ( $sceneInfo.length>0 ) {
+		$sceneInfo.html(desc);
+	}
+
+}
+/** Handles FromUnity_SetListItems -> Update list items 
+ * @param {Array.<string>} listAr List of items' game object name
+*/
 export function UpdateQuizList(listAr) {
 	// set up list content
 	const $container = $("#"+listContainerId);
@@ -148,22 +191,28 @@ export function EndGame() {
 
 /** Resets the GUI elements and text to init state */
 function resetSceneUI() {
-	const $btn = $("#"+dialogBtnId);
+	const $dialogBtn = $("#"+dialogBtnId);
+	const $allOKBtnId = $("#"+allOKBtnId);
 	const $dialog = $("#"+dialogId);
 	const $info = $("#"+quizInfoId);	
+
+	allOKBtnId
 	// reset UI
-	$dialog.dialog("open");
-	$btn.addClass("btn-open");
+	//$dialog.dialog("open");
+	//$btn.addClass("btn-open");
 	
 	$("#chkBtn").show();
 	$("#newSceneBtn").hide(); 
 	$("#nextBtn").hide(); 
 	
-	$info.text(prompts.info); 
+	$dialog.dialog("close");
+	$dialogBtn.removeClass("btn-open");
+	$info.text(prompts.quizinfo); 
+	$allOKBtnId.prop("disabled", false);
 	
 }
 
-function submitQuizHandler() {
+function submitBtnQuizHandler() {
 	const $info = $("#"+quizInfoId);
 	const $inputs_e_s = $("input._items._e_"); // error items
 	const $inputs_not_e_checked = $("input._items:not(._e_):checked"); 
@@ -213,11 +262,11 @@ function submitQuizHandler() {
 	$("#chkBtn").hide();
 }
 
-function newQuizbtnHandler() {
+function newQuizBtnHandler() {
 	UnityResetScene();
 }
 
-function nextQuizbtnHandler() {
+function nextQuizBtnHandler() {
 	UnityLoadNextScene();
 }
 

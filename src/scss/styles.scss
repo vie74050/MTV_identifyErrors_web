@@ -82,20 +82,22 @@ html, body {
         }
     }
 
-    #dialog-quiz-btn{
-        margin-left: auto;
+    .quiz-btn{
         font-size: 14px;
-        &::after{
-            content: "+";
-            border: 1px solid #ccc;
-            border-radius: 25%;
-            margin: 0 0 0 5px;
-            text-align: center;
-            padding: 0 5px;
-        }
-        &.btn-open::after{
-            content: "\2013";
-        }
+    }
+    .right {
+        margin-left: auto;
+    }
+    #dialog-quiz-btn::after{
+        content: "+";
+        border: 1px solid #ccc;
+        border-radius: 25%;
+        margin: 0 0 0 5px;
+        text-align: center;
+        padding: 0 5px;
+    }
+    #dialog-quiz-btn.btn-open::after{
+        content: "\2013";
     }
 }
 
@@ -103,11 +105,19 @@ canvas {
     width: 100%;
     height: calc(100% - var(--instructions-h));
 }
+#scene-info {
+    position: absolute;
+    right: 0;
+    top: 35px;
+    width: 280px;
+    background-color: white;
+    padding: 1em;
+}
 
 #dialog-quiz {
     
     width: fit-content;
-    
+    min-width: 250px;
     #list-items-container{
         p {
             display: flex;
