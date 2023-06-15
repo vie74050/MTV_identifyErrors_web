@@ -45,7 +45,7 @@ Calls from Unity scene to web are handled by methods prefixed `FromUnity_` and m
 
 Which must correspond to the functions called in the **Unity Project** `Assets\Plugins\JSLibs`.
 
-## Usage ##
+## USAGE ##
 
 ### Unity model set up ###
 
@@ -97,24 +97,27 @@ The first column is expected to be key string which references:
 
 The second column are the corresponding description texts.
 
-i.e
+### HTML Table Features ###
+
+e.g.
+| Name from Unity /keyword         | Description                                                                            |
+|----------------------------------|----------------------------------------------------------------------------------------|
+| Info prompt *                    | The prompt that appears with the inspection quiz before submit                         |
+| Show answers prompt *            | The prompt that appears after user submits answer                                      |
+| Scene 1                          | Scene start message for wrapped camera scene 1                                         |
+| Game Object Name                 | Optional feedback description associated with normal tape, if user marked as unsterile |
+| Game Object Name - ERROR         | Feedback description associated with unsterile tape                                    |
 
 ```html
   <table>
       <thead>
         <tr>
-          <th>Name: must match part name or scene name of Unity object</th>
-          <th>Content</th>
+          <th>Name from Unity /keyword</th>
+          <th>Description</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr>
-          <td>Scene 1</td>
-          <td>
-            <p>Description that appears with scene 1 start</p>
-          </td>
-        </tr>
         <tr>
           <td>Info prompt</td>
           <td>
@@ -131,14 +134,28 @@ i.e
           </td>
         </tr>
         <tr>
+          <td>Scene 1</td>
+          <td>
+            <p>Scene start message for wrapped camera scene 1</p>
+          </td>
+        </tr>
+        <tr>
           <td>Game Object Name</td>
           <td>
-            <p>Description that appears on evaluation of game object</p>
+            <p>Optional feedback description associated with normal tape, if user marked as unsterile</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Game Object Name - ERROR</td>
+          <td>
+            <p>Feedback description associated with unsterile tape</p>
           </td>
         </tr>
       </tbody>
     </table>
 ```
+
+> \* Info promp and Show answers prompt: These are special optional keywords to use to over-ride default prompt texts.
 
 ## DEPLOYMENT ##
 
