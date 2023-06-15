@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { UpdateQuizList, EndGame } from './QuizSetUp';
+import { SceneStart, UpdateQuizList, EndGame } from './QuizSetUp';
 declare global {
   interface Window { 
     FromUnity_Select: Function, 
@@ -114,19 +114,22 @@ function InitFromUnity() {
     
   }
 
-  /** Scene Start handler: called from Unity main>ActivityController>Start */
-  window.FromUnity_ApplicationStarted = function(str) {
+  /** Scene Start handler: called from Unity main>ActivityController>Start 
+   * @param {string} str Active scene name
+  */
+  window.FromUnity_ApplicationStarted = function( str: string) {
     
     // let web app know that Unity object is ready 
     console.log(str + " scene started");
+    SceneStart(str);
     
   }
 
-  /** Called by Unity SetBrowserItemsList once all S.O list items retrieved 
-   *  string delimited by \
+  /** Called by Unity SetBrowserItemsList once all S.O list items retrieved
    *  NB: Error objects names suffixed by "- ERROR"
+   * @param {string} str String of S.O items where isListItem is true, delimited by \
   */
-  window.FromUnity_SetListItems = function(str) {
+  window.FromUnity_SetListItems = function( str : string ) {
     let itemsInScene = str.split("\\");
     
     UpdateQuizList(itemsInScene);
