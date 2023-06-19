@@ -8,6 +8,7 @@ const listContainerId : string = "list-items-container";
 const quizInfoId : string = "dialog-quiz-info";
 const dialogBtnId : string = "dialog-quiz-btn";
 const allOKBtnId : string = "allOKbtn";
+const dialogEndGameId : string = "dialogEndGameId";
 
 var tableDataAr : string[][];
 var prompts = {
@@ -178,15 +179,59 @@ export function UpdateQuizList(listAr) {
 
 /** Handles Fromunity_EndGame if called */
 export function EndGame() {
+	const pos = { my: "center", of: window };
+	let $dialog_endgame = $("#"+dialogEndGameId);
 	let prompt = "Excellent work! " + prompts.endgame + "\n\nPlay again?";
 
 	if (numErrors > 0) {
 		prompt = prompts.endgame + "\n\nTotal misidentified: " + numErrors + ".  \n\nAim for 0 mistakes. Play again?  ";
 	}
-	if (confirm(prompt)) {
-		UnityLoadScene(0);
-		numErrors = 0;
+
+	// create UI elem & instantiate as $dialog component
+	if ($dialog_endgame.length == 0) {
+		
+		$dialog_endgame = $(`<div id="`+dialogEndGameId+`">`+prompt+`</div>`);
+		$("body").append($dialog_endgame);
+		$dialog_endgame.dialog({
+			draggable: true,
+			autoOpen: false,
+			resizable: false,
+			position: pos,
+			minWidth: 200, maxWidth: 400,
+			open: function (event, ui) {
+				$(".ui-dialog-titlebar-close").hide();
+				
+			},
+			buttons: [
+				{
+					text: "Play Again!",
+					id: "restartGameBtn",
+					click: function () {
+						UnityLoadScene(0);
+						numErrors = 0;
+						$dialog_endgame.dialog('close');
+					}
+				},
+				{
+					text: "Save Session QR",
+					id: "saveQRBtn",
+					click: function() {
+						
+						let qrImg = document.createElement('img');
+						const data = getSessionDataPkg();
+						const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data}`;
+						qrImg.src = url;
+						
+						downloadImage(url, "QRsessionCode");
+					}
+				}
+			]
+		});
+
 	}
+	
+	$dialog_endgame.html(prompt);
+	$dialog_endgame.dialog('open');
 }
 
 /** Resets the GUI elements and text to init state */
@@ -277,3 +322,22 @@ function getFBIcon(desc) {
 	
 	return $fbBtn;
 }
+
+/** @returns {string} Session data for QR code */
+function getSessionDataPkg() {
+	//@TODO -- what data should be pkged? num errors, num attempts, date /uuid? 
+	return "Errors: " + numErrors; 
+}
+async function downloadImage(imageSrc: string, saveAsFileName: string) {
+	const image = await fetch(imageSrc);
+	const imageBlog = await image.blob();
+	const imageURL = URL.createObjectURL(imageBlog);
+  
+	const link = document.createElement('a');
+	link.href = imageURL;
+	link.download = saveAsFileName;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	window.alert("Check your Downloads folder for " + saveAsFileName);
+  }
