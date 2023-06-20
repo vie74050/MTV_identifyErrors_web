@@ -12,7 +12,8 @@
   "dependencies": {
     "jquery": "^3.6.4",
     "jquery-ui-dist": "^1.13.2",
-    "require-text": "^0.0.1"
+    "require-text": "^0.0.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",

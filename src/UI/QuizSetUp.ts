@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { GetTableData } from "./GetTableData";
 import { UnityLoadNextScene, UnityResetScene, UnityLoadScene } from "./UnityLoaderSetup";
+import { v4 as uuidv4 } from 'uuid';
 
 const sceneInfoId: string = "scene-info";
 const dialogId : string = "dialog-quiz";
@@ -19,6 +20,9 @@ var prompts = {
 	itemok: 'This item is oK',
 	endgame: 'Completed all tasks'
 }
+
+/** Unique ID for QR */
+var uuid = uuidv4();
 /** Tracks total number of misidentified items */
 var numErrors = 0;
 
@@ -90,6 +94,8 @@ export function QuizUISetUp(btnParentId : string = "body") {
 				});
 
 				$allOKbtn.on("mousedown", function(){
+					// uncheck all 
+					$("input._items").prop("checked", false);
 					$(this).prop("disabled", true);
 					submitBtnQuizHandler();
 					$dialog.dialog("open");
@@ -177,7 +183,9 @@ export function UpdateQuizList(listAr) {
 	resetSceneUI();
 }
 
-/** Handles Fromunity_EndGame if called */
+/** Handles Fromunity_EndGame if called 
+ * Instantiates end game dialog UI
+*/
 export function EndGame() {
 	const pos = { my: "center", of: window };
 	let $dialog_endgame = $("#"+dialogEndGameId);
@@ -260,8 +268,7 @@ function resetSceneUI() {
 function submitBtnQuizHandler() {
 	const $info = $("#"+quizInfoId);
 	const $inputs_e_s = $("input._items._e_"); // error items
-	const $inputs_not_e_checked = $("input._items:not(._e_):checked"); 
-
+	
 	// all error items and non error but checked items get fb icon
 	const $inputs_toFB = $("input._items:not(._e_):checked, input._items._e_"); 
 
@@ -286,13 +293,7 @@ function submitBtnQuizHandler() {
 	// feedback info text
 	if ($inputs_e_s.length == 0) {
 		fb_text = prompts.noerrors;
-
-		if ($inputs_not_e_checked.length != 0) {
-			fb_text = "Incorrect! " + prompts.noerrors;
-		}else {
-			fb_text = "Correct! " + prompts.noerrors;
-		}
-
+		
 		$("#newSceneBtn").hide();
 		$("#nextBtn").show();
 
@@ -302,7 +303,12 @@ function submitBtnQuizHandler() {
 	}
 
 	numErrors += $(".fb-icon:not(.correct)").length;
-	$info.html(fb_text);
+
+	if ($(".fb-icon:not(.correct)").length > 0) {
+		$info.html("<b>Incorrect!</b> " + fb_text);
+	}else {
+		$info.html("<b>Correct!</b>" + fb_text);
+	}
 
 	$("#chkBtn").hide();
 }
@@ -325,8 +331,11 @@ function getFBIcon(desc) {
 
 /** @returns {string} Session data for QR code */
 function getSessionDataPkg() {
+	const datenow = "Date: " + Date.now();
+	const errorsTot = "Errors: " + numErrors;
+	const sessUUID = "UUID: " + uuid;
 	//@TODO -- what data should be pkged? num errors, num attempts, date /uuid? 
-	return "Errors: " + numErrors; 
+	return sessUUID + "%0A " + datenow + "%0A " + errorsTot; 
 }
 async function downloadImage(imageSrc: string, saveAsFileName: string) {
 	const image = await fetch(imageSrc);
