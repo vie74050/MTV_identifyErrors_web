@@ -184,7 +184,7 @@ export function EndGame() {
 	let prompt = "Excellent work! " + prompts.endgame + "\n\nPlay again?";
 
 	if (numErrors > 0) {
-		prompt = prompts.endgame + "\n\nTotal misidentified: " + numErrors + ".  \n\nAim for 0 mistakes. Play again?  ";
+		prompt = prompts.endgame + "<br/><br/>Total misidentified: " + numErrors + ".  <br/><br/>Aim for 0 mistakes. Play again?  ";
 	}
 
 	// create UI elem & instantiate as $dialog component
