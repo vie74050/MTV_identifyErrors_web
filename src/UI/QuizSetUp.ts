@@ -10,6 +10,7 @@ const quizInfoId : string = "dialog-quiz-info";
 const dialogBtnId : string = "dialog-quiz-btn";
 const allOKBtnId : string = "allOKbtn";
 const dialogEndGameId : string = "dialogEndGameId";
+const pos = { my: "right top", at: "right top+31", of: window };
 
 var tableDataAr : string[][];
 var prompts = {
@@ -65,8 +66,7 @@ export function QuizUISetUp(btnParentId : string = "body") {
 	const $allOKbtn = $(`<button class="quiz-btn right" id="` + allOKBtnId + `">No issues in scene</button>`);
 	const $dialogBtn = $(`<button class="quiz-btn" id="`+dialogBtnId+`">Report Issue(s)</button>`);
 	const $dialog = $("#"+dialogId);
-	const pos = { my: "right bottom", at: "right bottom", of: window };
-
+	
 	$(btnParentId).append($allOKbtn, $dialogBtn); 
 
 	if ($dialog.length !== 0) {
@@ -314,7 +314,7 @@ function submitBtnQuizHandler() {
 	}else {
 		$info.html("<b>Correct!</b> <br/>" + fb_text);
 	}
-	$("#"+dialogId).dialog("option", "position", { my: "right bottom", at: "right bottom", of: window });
+	$("#"+dialogId).dialog("option", "position", pos);
 	$("#chkBtn").hide();
 }
 
