@@ -79,7 +79,7 @@ export function QuizUISetUp(btnParentId : string = "body") {
 			resizable: false,
 			position: pos,
 			minWidth: 200, maxWidth: 400,
-			height: h,
+			maxHeight: h,
 			create: function (event, ui) {
 				$dialogBtn.on("mousedown", function () {
 
@@ -107,7 +107,7 @@ export function QuizUISetUp(btnParentId : string = "body") {
 			},
 			open: function (event, ui) {
 				h = $("canvas").height(); 
-				$(this).dialog("option", "height", h);
+				//$(this).dialog("option", "height", h);
 				$(this).dialog("option", "maxHeight", h);
 				$(this).dialog("option", "position", pos);
 				
@@ -314,7 +314,7 @@ function submitBtnQuizHandler() {
 	}else {
 		$info.html("<b>Correct!</b> <br/>" + fb_text);
 	}
-	$("#"+dialogId).dialog("option", "height", $("canvas").height());
+	$("#"+dialogId).dialog("option", "position", { my: "right bottom", at: "right bottom", of: window });
 	$("#chkBtn").hide();
 }
 
