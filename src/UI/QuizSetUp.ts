@@ -101,12 +101,16 @@ export function QuizUISetUp(btnParentId : string = "body") {
 					$dialog.dialog("open");
 					$dialogBtn.addClass("btn-open");
 				});
+
+				$("#"+dialogId).after($("#"+quizInfoId));
+				
 			},
 			open: function (event, ui) {
 				h = $("canvas").height(); 
 				$(this).dialog("option", "height", h);
 				$(this).dialog("option", "maxHeight", h);
 				$(this).dialog("option", "position", pos);
+				
 			},
 			close: function (event, ui) {
 				$dialogBtn.removeClass("btn-open");
@@ -275,6 +279,7 @@ function submitBtnQuizHandler() {
 	let fb_text = "";
 
 	$("input").prop("disabled", true);
+	$("#"+allOKBtnId).prop("disabled", true);
 	// Add UI fb on all error items 
 	$inputs_toFB.each( (i,input) => {
 		const $input = $(input);
@@ -305,11 +310,11 @@ function submitBtnQuizHandler() {
 	numErrors += $(".fb-icon:not(.correct)").length;
 
 	if ($(".fb-icon:not(.correct)").length > 0) {
-		$info.html("<b>Incorrect!</b> " + fb_text);
+		$info.html("<b>Incorrect!</b> <br/>" + fb_text);
 	}else {
-		$info.html("<b>Correct!</b>" + fb_text);
+		$info.html("<b>Correct!</b> <br/>" + fb_text);
 	}
-
+	$("#"+dialogId).dialog("option", "height", $("canvas").height());
 	$("#chkBtn").hide();
 }
 
