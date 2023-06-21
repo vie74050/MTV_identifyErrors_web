@@ -1,8 +1,7 @@
 import $ from "jquery";
-import { GetTableData } from "./GetTableData";
+import { GetTableData } from "../utils/GetTableData";
 import { UnityLoadNextScene, UnityResetScene, UnityLoadScene } from "./UnityLoaderSetup";
-import { v4 as uuidv4 } from 'uuid';
-
+import { GetQRCode } from "../utils/GetQRCode";
 const sceneInfoId: string = "scene-info";
 const dialogId : string = "dialog-quiz";
 const listContainerId : string = "list-items-container";
@@ -22,10 +21,8 @@ var prompts = {
 	endgame: 'Completed all tasks'
 }
 
-/** Unique ID for QR */
-var uuid = uuidv4();
 /** Tracks total number of misidentified items */
-var numErrors = 0;
+export var numErrors = 0;
 
 /** The GUI setup for the inspection check list items.
  * Creates the HTML elements:
@@ -45,9 +42,9 @@ export function QuizUISetUp(btnParentId : string = "body") {
 		
 		// create elems if not in html
 		$("body").prepend($(quizui));
-		console.log("created dom elems", $("#"+dialogId));
+		console.log("created dom elems", dialogId);
 	}else{
-		console.log("found dom elems", $("#"+dialogId));
+		console.log("found dom elems", dialogId);
 	}
 
 	tableDataAr = GetTableData();
@@ -228,13 +225,7 @@ export function EndGame() {
 					text: "Save Session QR",
 					id: "saveQRBtn",
 					click: function() {
-						
-						let qrImg = document.createElement('img');
-						const data = getSessionDataPkg();
-						const url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data}`;
-						qrImg.src = url;
-						
-						downloadImage(url, "QRsessionCode");
+						GetQRCode({"Errors": numErrors});
 					}
 				}
 			]
@@ -333,25 +324,3 @@ function getFBIcon(desc) {
 	
 	return $fbBtn;
 }
-
-/** @returns {string} Session data for QR code */
-function getSessionDataPkg() {
-	const datenow = "Date: " + Date.now();
-	const errorsTot = "Errors: " + numErrors;
-	const sessUUID = "UUID: " + uuid;
-	//@TODO -- what data should be pkged? num errors, num attempts, date /uuid? 
-	return sessUUID + "%0A " + datenow + "%0A " + errorsTot; 
-}
-async function downloadImage(imageSrc: string, saveAsFileName: string) {
-	const image = await fetch(imageSrc);
-	const imageBlog = await image.blob();
-	const imageURL = URL.createObjectURL(imageBlog);
-  
-	const link = document.createElement('a');
-	link.href = imageURL;
-	link.download = saveAsFileName;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	window.alert("Check your Downloads folder for " + saveAsFileName);
-  }

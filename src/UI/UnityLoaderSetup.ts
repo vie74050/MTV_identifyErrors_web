@@ -12,6 +12,7 @@ declare global {
 const canvasid = "unity-canvas";
 var UnityInstance = null;
 
+/** Unity progress loader UI and loaded init handling */
 export function LoadUnity() {
     const loader = `<div id="loading-cover">
                       <div id="logo"></div> 
