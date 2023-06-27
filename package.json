@@ -4,7 +4,7 @@
   "description": "Model Task Viewer - identify errors",
   "scripts": {
     "start": "webpack --watch --config webpack.dev.js",
-    "update3d": "cp -r ./Builds ./uploads",
+    "update3d": "cp -r ./src/Builds ./uploads",
     "build": "webpack --config webpack.prod.js",
     "predeploy": "npm run build && npm run update3d",
     "deploy": "gh-pages -d uploads"
@@ -12,7 +12,8 @@
   "dependencies": {
     "jquery": "^3.6.4",
     "jquery-ui-dist": "^1.13.2",
-    "require-text": "^0.0.1"
+    "require-text": "^0.0.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",
