@@ -188,16 +188,15 @@ canvas {
         }
     }
     
-    #dialog-quiz-info{
-        background-color: lightblue;
-        margin: -1em -1em 1em;
-        padding: 1em;
-        &:empty {
-            background-color: #add8e600;
-            padding: 0;
-            margin: 0;
-        }
-    }
+    
+}
+#dialog-quiz-info{
+    background-color: lightblue;
+    margin: 0em -1.3em 0em -1.3em;
+    padding: 1em;
+    border-left: 1em solid #24667c;
+    border-right: 1em solid #24667c;
+    border-radius:1em;
 }
 
 .ui-tooltip {

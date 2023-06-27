@@ -8,7 +8,7 @@ module.exports = {
     ],
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'uploads'),
+        path: path.resolve(__dirname, 'uploads/src'),
         clean: true,
     },
     resolve: {

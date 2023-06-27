@@ -76,10 +76,10 @@ Template for the `index.html` page is in the **Unity project**: `Assets\WebGLTem
 Make sure template has the proper bundle src url:
 
 ```html
-    <link rel="stylesheet" href="https://vie74050.github.io/MTV_identifyErrors_web/bundle.css" />
+    <link rel="stylesheet" href="https://vie74050.github.io/MTV_identifyErrors_web/src/bundle.css" />
 
     <script 
-      src="https://vie74050.github.io/MTV_identifyErrors_web/bundle.js"
+      src="https://vie74050.github.io/MTV_identifyErrors_web/src/bundle.js"
       type="text/javascript"></script> 
 ```
 
@@ -166,8 +166,8 @@ Webpack will package the bundles and copy the `Builds` folder contents to `uploa
 
 Source code hosted on GitHub pages:
 
-<https://vie74050.github.io/MTV_identifyErrors_web/bundle.css>
-<https://vie74050.github.io/MTV_identifyErrors_web/bundle.js>
+<https://vie74050.github.io/MTV_identifyErrors_web/src/bundle.css>
+<https://vie74050.github.io/MTV_identifyErrors_web/src/bundle.js>
 
 ### BCIT LMS (Private - requires access) ###
 
