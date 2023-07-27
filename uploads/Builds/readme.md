@@ -10,7 +10,7 @@ Sample Unity builds for testing only
 
 ### From QA feedback ###
 
-See Feedback doc [Feedback Alpha QA](https://docs.google.com/document/d/103jgIo_mXU8qBpzMVvhTUolsdcy8MlrS/edit?usp=sharing&ouid=112502391111689148097&rtpof=true&sd=true)
+See Feedback doc [Feedback changelog](https://docs.google.com/document/d/103jgIo_mXU8qBpzMVvhTUolsdcy8MlrS/edit?usp=sharing&ouid=112502391111689148097&rtpof=true&sd=true)
 
 #### updated June 13 2023 ####
 
@@ -29,4 +29,8 @@ See Feedback doc [Feedback Alpha QA](https://docs.google.com/document/d/103jgIo_
 
 #### updated June 27 2023 ####
 
-- [x] NAME CHANGES per request in [feedback doc](https://docs.google.com/document/d/103jgIo_mXU8qBpzMVvhTUolsdcy8MlrS/edit?usp=sharing&ouid=112502391111689148097&rtpof=true&sd=true)
+- [x] Name changes per request
+
+#### updated July 26 2023 ####
+
+- [x] Updated scenes to make blood stains more noticeable
