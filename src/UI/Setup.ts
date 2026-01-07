@@ -14,7 +14,13 @@ export function SetupUI() {
 
     LoadUnity(); 
 
-    QuizUISetUp("#header");
+    // Check for ?quiz=false in the URL, if false, skip quiz setup (for 3D model viewer only mode)
+    const urlParams = new URLSearchParams(window.location.search);
+    const quizParam = urlParams.get('quiz');
+    const isQuizEnabled = quizParam === null || quizParam !== 'false';
+    if (isQuizEnabled)    
+        QuizUISetUp("#header");
+    
     $( document ).tooltip();
    
 }

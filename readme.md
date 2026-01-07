@@ -24,7 +24,7 @@ Using npm and webpack. Use `npm install` to get started.
 
 - For dev, use `npm run start` for watch mode.
 - To update the `Builds`, use `npm run update3d`.  This copies `./Builds` to `./uploads`.
-- For prod, build `npm run build`
+- For prod, build `npm run build` will bundle the scripts.  
 
 ### Unity model handlers ###
 
