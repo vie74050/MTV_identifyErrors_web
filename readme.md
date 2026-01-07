@@ -100,6 +100,7 @@ The second column are the corresponding description texts.
 ### HTML Table Features ###
 
 e.g.
+
 | Name from Unity /keyword         | Description                                                                            |
 |----------------------------------|----------------------------------------------------------------------------------------|
 | Info prompt *                    | The prompt that appears with the inspection quiz before submit                         |
