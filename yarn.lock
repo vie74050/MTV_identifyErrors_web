@@ -2219,9 +2219,9 @@ tapable@^2.0.0, tapable@^2.2.0, tapable@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/tapable/-/tapable-2.3.0.tgz"
 
-tar@^7.5.6:
-  version "7.5.6"
-  resolved "https://registry.npmjs.org/tar/-/tar-7.5.6.tgz"
+tar@^7.5.7:
+  version "7.5.7"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.7.tgz#adf99774008ba1c89819f15dbd6019c630539405"
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"
